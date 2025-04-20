@@ -5,7 +5,7 @@ import app from './app';
 
 //connect to database
 import { connectDB } from './config/db';
-connectDB()
+connectDB();
 
 const port = process.env.PORT;
 

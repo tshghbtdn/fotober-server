@@ -9,6 +9,8 @@ const client = new Client({
   ssl: { rejectUnauthorized: false }  // SSL cấu hình đúng
 });
 
+export { client };
+
 export async function connectDB(): Promise<void> {
   try {
     await client.connect()
@@ -17,7 +19,6 @@ export async function connectDB(): Promise<void> {
     const res = await client.query('SELECT NOW()')
     console.log('🕒 Current time from DB:', res.rows[0])
 
-    await client.end()
   } catch (err) {
     console.error('❌ Error connecting to database:', err)
   }

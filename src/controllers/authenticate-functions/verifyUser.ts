@@ -9,6 +9,8 @@ if (!JWT_SECRET) {
     throw new Error("Missing JWT_SECRET in environment variables.");
 }
 
+const BCRYPT_SALT_ROUNDS = parseInt(process.env.BCRYPT_SALT_ROUNDS || '8');
+
 export const verifyUser = async (req: Request, res: Response): Promise<void>  => {
     try {
         const { username, password } = req.body;
@@ -20,8 +22,10 @@ export const verifyUser = async (req: Request, res: Response): Promise<void>  =>
         }
 
         const isMatch = await bcrypt.compare(password, hashedPassword);
+        const check = await bcrypt.hash(password, BCRYPT_SALT_ROUNDS);
         if (!isMatch) {
             res.status(401).json({ message: "Wrong password" });
+            console.log('🔍 Debug info:', { password, hashedPassword, check });
             return;
         }
 

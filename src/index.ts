@@ -7,13 +7,13 @@ import app from './app';
 import { connectDB } from './config/db';
 connectDB();
 
-const port = process.env.PORT;
-
-if (!port){
-    throw new Error("Missing PORT in environment variables.");
+if (!process.env.PORT){
+  throw new Error("Missing PORT in environment variables.");
 }
 
+const port = parseInt(process.env.PORT, 10);
+
 // Start server
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
   console.log(`Server running on port ${port}. This is a backend server, so you won't see anything here.`);
 });

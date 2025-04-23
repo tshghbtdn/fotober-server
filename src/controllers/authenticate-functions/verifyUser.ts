@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
-import { getUserPassword, getUserId  } from '../../services';
+import { getUserPassword, getUserId } from '../../services';
 import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
@@ -22,18 +22,24 @@ export const verifyUser = async (req: Request, res: Response): Promise<void>  =>
         }
 
         const isMatch = await bcrypt.compare(password, hashedPassword);
-        const check = await bcrypt.hash(password, BCRYPT_SALT_ROUNDS);
         if (!isMatch) {
             res.status(401).json({ message: "Wrong password" });
-            console.log('🔍 Debug info:', { password, hashedPassword, check });
             return;
         }
 
         const userId = await getUserId(username);
         const payload = { userId };
-        const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '15m' });
+        const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1d' });
 
-        res.status(200).json({ token });
+        // Gửi token trong cookie
+        res.cookie('token', token, {
+            httpOnly: true, // Giúp bảo mật hơn, cookie không thể truy cập qua JavaScript
+            secure: process.env.NODE_ENV === 'production', // Chỉ dùng https trong môi trường production
+            maxAge: 60 * 24 * 60 * 1000, // Thời gian sống của cookie (15 phút)
+            sameSite: 'strict', // Đảm bảo cookie chỉ gửi khi request từ cùng một domain
+        });
+        console.log("Token:", token); // Log the token for debugging
+        res.status(200).json({ message: "Login successful" });
     } catch (err) {
         res.status(500).json({ message: "Internal server error" });
         console.error(err); // Log the error for debugging

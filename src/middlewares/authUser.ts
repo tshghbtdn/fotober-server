@@ -36,6 +36,9 @@ export const mid_authenticateUser = (req: Request, res: Response, next: NextFunc
 
     if (res.locals.role !== clientRole) {
       res.status(403).json({ message: "Invalid Request" }); 
+      console.log(token)
+      console.log(res.locals.role)
+      console.log(clientRole)
       return;
     }
     

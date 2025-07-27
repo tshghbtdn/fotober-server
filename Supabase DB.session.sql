@@ -9,5 +9,5 @@ CREATE TABLE jobs (
   output TEXT,              -- Dùng để lưu link kết quả đầu ra
   instruction TEXT,        
   deadline DATE,
-  user_id TEXT
+  user_id TEXT[]
 );

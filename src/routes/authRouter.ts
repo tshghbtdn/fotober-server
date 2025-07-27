@@ -1,12 +1,11 @@
 // File: src/routes/authRouter.ts
 import express from 'express';
-import { con_loginUser,con_logoutUser, con_registerUser } from '../controllers/authenticate-functions';
-
+import * as AuthFuns from '../controllers/auth-functions';
 
 const app = express.Router();
 
-app.post('/login', con_loginUser);
-app.post('/register', con_registerUser);
-app.post('/logout', con_logoutUser);
+app.post('/login', AuthFuns.con_loginUser);
+app.post('/register', AuthFuns.con_registerUser);
+app.post('/logout', AuthFuns.con_logoutUser);
 
 export default app;

@@ -1,16 +1,22 @@
-//File: src/routes/jobs/jobRouter.ts
+// File: src/services/jobs/updateJobOutput.ts
 import { client } from '../../config/db';
 
 export async function ser_updateJobOutput(
-  userId: string,
-  jobCode: string,
+  user_id: string,
+  job_code: string,
   output: string
-) {
-  const query = `
-    UPDATE jobs
-    SET output = $1
-    WHERE job_code = $2 AND user_id = $3
-  `;
+): Promise<boolean> {
+  try {
+    const result = await client.query(
+      `UPDATE jobs 
+       SET output = $1
+       WHERE job_code = $2 AND $3 = ANY(user_id)`,
+      [output, job_code, user_id]
+    );
 
-  return client.query(query, [output, jobCode, userId]);
+    return result.rowCount !== null && result.rowCount > 0;
+  } catch (error) {
+    console.error('Error in ser_update_output:', error);
+    return false;
+  }
 }

@@ -1,16 +1,12 @@
 import express from 'express';
-import * as JobFuns from '../controllers/jobManagement-functions/getJob';
-import { con_updateJobOutput } from '../controllers/jobManagement-functions/updateJobOutput';
-import { mid_authenticateUser } from '../middlewares/authUser';
-import { con_countTodayJob } from '../controllers/jobManagement-functions/countTodayJob';
-import { con_createJob } from '../controllers/jobManagement-functions/createJob';
+import * as JobFuns from '../controllers/jobManagement-functions';
 
 const router = express.Router();
 
-router.post('/', JobFuns.con_getJob);
+router.get('/', JobFuns.con_getJobs);
+router.get('/countToday', JobFuns.con_countTodayJob);
 
 // Thêm route cập nhật output
-router.post('/output', mid_authenticateUser, con_updateJobOutput);
-router.post('/countToday',con_countTodayJob);
-router.post('/create',mid_authenticateUser,con_createJob)
+router.post('/output', JobFuns.con_updateJobOutput);
+router.post('/create', JobFuns.con_createJob)
 export default router;

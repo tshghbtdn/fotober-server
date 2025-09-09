@@ -17,3 +17,17 @@ export async function ser_getJob(userId: string) {
     throw error;
   }
 }
+
+export async function ser_getAllJob() {
+  try {
+    const result = await client.query(
+      `SELECT job_code, customer_name, create_date, job_type, volume, sub_type, 
+              input, instruction, deadline, output
+       FROM jobs_request`
+    );
+    return result.rows;
+  } catch (error) {
+    console.error('Error in ser_getAllJob:', error);
+    throw error;
+  }
+}

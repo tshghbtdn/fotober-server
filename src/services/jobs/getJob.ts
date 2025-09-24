@@ -18,6 +18,24 @@ export async function ser_getJob(userId: string) {
   }
 }
 
+export async function ser_getJobByCSCode(cs_code: string) {
+  try {
+    const result = await client.query(
+      `SELECT job_code, customer_name, create_date, job_type, volume, sub_type, 
+              input, instruction, deadline, output
+       FROM jobs_request
+       WHERE $1 = jobs_request.cs_code`,
+      [cs_code]
+    );
+
+    console.log(cs_code);
+    return result.rows;
+  } catch (error) {
+    console.error('Error in ser_getJobByCSCode:', error);
+    throw error;
+  }
+}
+
 export async function ser_getAllJob() {
   try {
     const result = await client.query(
@@ -31,3 +49,4 @@ export async function ser_getAllJob() {
     throw error;
   }
 }
+ 

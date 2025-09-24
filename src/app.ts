@@ -19,7 +19,7 @@ import jobRouter from './routes/jobRouter';
 import { mid_authenticateUser } from './middlewares';
 
 //Mounding routers
-app.use('/auth', mid_authenticateUser, authRouter);
+app.use('/auth', authRouter);
 app.use('/job', mid_authenticateUser, jobRouter);
 
 export default app;

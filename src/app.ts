@@ -16,10 +16,12 @@ app.use(cookieParser());
 // Các router khác
 import authRouter from './routes/authRouter';
 import jobRouter from './routes/jobRouter';
+import manageRouter from './routes/managerRouter';
 import { mid_authenticateUser } from './middlewares';
 
 //Mounding routers
 app.use('/auth', authRouter);
 app.use('/job', mid_authenticateUser, jobRouter);
+app.use('/manager', mid_authenticateUser, manageRouter);
 
 export default app;

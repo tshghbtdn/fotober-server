@@ -41,15 +41,15 @@ export const con_loginUser = async (req: Request, res: Response): Promise<void> 
         
         
         
-        console.log("Token:",token); // Log the token for debugging
-        console.log("Name:" ,name);
-        console.log("Role:",role);
+        console.log("Token:", token); // Log the token for debugging
+        console.log("Name:" , name);
+        console.log("Role:", role);
         const count = await ser_countTodayJob();
         console.log("Jobs today:", count);
         
-        if(role==='saler'){
-            const cscode=await ser_getSalerCode(userId);
-            console.log("Code:",cscode);
+        if (role==='saler') {
+            const cscode = await ser_getSalerCode(userId);
+            console.log("Code:", cscode);
             res.status(200).json({ message: "Login successful", token: token, role: role, name: name,cscode:cscode });
         }
         else

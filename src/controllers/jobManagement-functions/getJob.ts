@@ -1,6 +1,5 @@
 // File: src/controllers/jobManagement-functions/getJob.ts
 import { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
 import { ser_getJob, ser_getAllJob, ser_getJobByCSCode } from '../../services/jobs/getJob';
 import { ser_getSalerCode } from '../../services/accounts';
 

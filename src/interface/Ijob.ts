@@ -1,5 +1,5 @@
 //File: src/interface/Ijob.ts
-export interface inter_Job {
+export interface IJob {
   job_code: string;
   customer_name: string;
   create_date: string;
